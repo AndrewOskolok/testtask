@@ -1,0 +1,67 @@
+.aboutMe {
+  background-color: var(--bgc-first);
+
+  &__wrapper {
+    margin: 0 auto;
+    padding: 75px 0 80px;
+    width: 330px;
+  }
+
+  &__section_title {
+    color: var(--dark-font);
+    font-family: var(--main-font);
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 34px;
+    text-align: center;
+    margin-bottom: 35px;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 289px;
+      height: 243px;
+      margin: 34px auto 0;
+      background-image: url(../../images/icons/man-laptop-v1.svg);
+      background-size: cover;
+    }
+  }
+
+  &__title {
+    color: var(--dark-font);
+    font-family: var(--main-font);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__desc {
+    color: var(--grey-font);
+    font-family: var(--main-font);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__desc--first {
+    margin-bottom: 24px;
+  }
+
+  &__desc--second {
+    margin-bottom: 31px;
+  }
+
+  &__btn {
+    display: block;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
