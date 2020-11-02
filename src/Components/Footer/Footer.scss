@@ -19,3 +19,22 @@
     font-size: 16px;
   }
 }
+
+@media (min-width: 768px) {
+  .footer {
+    &__wrapper {
+      width: 708px;
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .footer {
+    &__wrapper {
+      padding: 0 30px;
+      width: 100%;
+      min-width: 964px;
+      max-width: 1200px;
+    }
+  }
+}

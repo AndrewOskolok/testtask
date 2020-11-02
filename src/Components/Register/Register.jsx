@@ -3,7 +3,7 @@ import "./Register.scss";
 
 const Register = () => {
   return (
-    <section className="register">
+    <section id="register" className="register">
       <div className="register__wrapper">
         <h2 className="register__title">Register to get a work</h2>
 
@@ -44,7 +44,12 @@ const Register = () => {
                 name="position"
                 value="front"
                 id="pos1"
+                hidden
               ></input>
+              <label
+                className="register__form_list_item_btn"
+                htmlFor="pos1"
+              ></label>
               <label className="register__form_list_item_label" htmlFor="pos1">
                 Frontend developer
               </label>
@@ -57,7 +62,12 @@ const Register = () => {
                 name="position"
                 value="back"
                 id="pos2"
+                hidden
               ></input>
+              <label
+                className="register__form_list_item_btn"
+                htmlFor="pos2"
+              ></label>
               <label className="register__form_list_item_label" htmlFor="pos2">
                 Backend developer
               </label>
@@ -70,7 +80,12 @@ const Register = () => {
                 name="position"
                 value="des"
                 id="pos3"
+                hidden
               ></input>
+              <label
+                className="register__form_list_item_btn"
+                htmlFor="pos3"
+              ></label>
               <label className="register__form_list_item_label" htmlFor="pos3">
                 Designer
               </label>
@@ -83,7 +98,12 @@ const Register = () => {
                 name="position"
                 value="qa"
                 id="pos4"
+                hidden
               ></input>
+              <label
+                className="register__form_list_item_btn"
+                htmlFor="pos4"
+              ></label>
               <label className="register__form_list_item_label" htmlFor="pos4">
                 QA
               </label>

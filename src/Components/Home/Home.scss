@@ -5,13 +5,16 @@
 
   &__wrapper {
     margin: 0 auto;
-    padding: 70px 0 75px;
-    width: 330px;
+    padding: 70px 15px 75px;
+    width: 100%;
+    min-width: 330px;
+    max-width: 570px;
   }
 
   &__title {
     margin: 0 auto;
-    width: 312px;
+    width: 100%;
+    min-width: 312px;
     color: var(--light-font);
     font-family: var(--main-font);
     font-weight: 400;
@@ -39,12 +42,79 @@
     height: 38px;
     color: var(--light-font);
     font-family: var(--main-font);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 16px;
+    line-height: 38px;
+    text-align: center;
     outline: none;
     border: none;
     border-radius: 4px;
     background-color: var(--primary-color);
+    transition: background-color 0.2s linear;
     cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: #d24335;
+    }
+  }
+
+}
+
+@media (min-width: 768px) {
+  .home {
+    background-size: 134%;
+    background-position: 0 0;
+
+    &__wrapper {
+      margin: 0 auto;
+      padding: 60px 30px 65px;
+      width: 100%;
+      min-width: 708px;
+      max-width: 1023px;
+    }
+
+    &__title {
+      margin: 0;
+      width: 65%;
+      font-size: 40px;
+      line-height: 44px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    &__desc {
+      width: 65%;
+      text-align: left;
+      margin-bottom: 33px;
+    }
+
+    &__btn {
+      margin: 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .home {
+    background-size: cover;
+
+    &__wrapper {
+      padding: 108px 30px 115px;
+      width: 100%;
+      min-width: 964px;
+      max-width: 1200px;
+    }
+
+    &__title {
+      width: 540px;
+      font-size: 50px;
+      line-height: 54px;
+      margin-bottom: 24px;
+    }
+
+    &__desc {
+      width: 530px;
+    }
   }
 }

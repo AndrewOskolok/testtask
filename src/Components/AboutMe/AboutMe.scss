@@ -3,31 +3,37 @@
 
   &__wrapper {
     margin: 0 auto;
-    padding: 75px 0 80px;
-    width: 330px;
+    padding: 75px 15px 80px;
+    width: 100%;
+    min-width: 330px;
+    max-width: 767px;
   }
 
   &__section_title {
+    position: relative;
     color: var(--dark-font);
     font-family: var(--main-font);
     font-weight: 400;
     font-size: 30px;
     line-height: 34px;
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 311px;
 
     &::after {
       content: "";
       display: block;
       width: 289px;
       height: 243px;
-      margin: 34px auto 0;
+      position: absolute;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%);
       background-image: url(../../images/icons/man-laptop-v1.svg);
       background-size: cover;
     }
   }
 
-  &__title {
+  &__content_title {
     color: var(--dark-font);
     font-family: var(--main-font);
     font-weight: 400;
@@ -37,7 +43,7 @@
     margin-bottom: 20px;
   }
 
-  &__desc {
+  &__content_desc {
     color: var(--grey-font);
     font-family: var(--main-font);
     font-weight: 400;
@@ -62,6 +68,92 @@
     font-size: 18px;
     font-weight: 600;
     background-color: transparent;
+    transition: color 0.2s linear;
     cursor: pointer;
+
+    &:hover,
+    &:focus {
+      color: #d24335;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .aboutMe {
+    &__wrapper {
+      padding: 110px 30px 116px;
+      width: 100%;
+      min-width: 708px;
+      max-width: 1023px;
+    }
+
+    &__section_title {
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 65px;
+
+      &::after {
+        width: 246px;
+        height: 207px;
+        top: 120px;
+        left: 0px;
+        transform: translateX(0);
+      }
+    }
+
+    &__content_wrapper {
+      display: flex;
+      flex-direction: column;
+      align-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    &__content_title {
+      text-align: left;
+    }
+
+    &__content_desc {
+      width: 61%;
+    }
+
+    &__desc--second {
+      margin-bottom: 30px;
+    }
+
+    &__btn {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2560px) {
+  .aboutMe {
+    &__wrapper {
+      padding: 152px 30px 156px;
+      width: 100%;
+      min-width: 964px;
+      max-width: 1200px;
+    }
+
+    &__section_title {
+      font-size: 50px;
+      line-height: 54px;
+      margin-bottom: 65px;
+
+      &::after {
+        width: 340px;
+        height: 285px;
+        top: 125px;
+        left: 25px;
+      }
+    }
+
+    &__content_desc {
+      width: 57%;
+    }
+
+    &__desc--second {
+      margin-bottom: 32px;
+    }
   }
 }
