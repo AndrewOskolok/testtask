@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import avatar from "../../images/icons/photo-cover.svg";
 import "./Users.scss";
 
-import avatar from "../../images/icons/photo-cover.svg";
+axios.defaults.baseURL =
+  "https://frontend-test-assignment-api.abz.agency/api/v1";
 
 const Users = () => {
+  const [users, setUsers] = useState([]);
+  const [loadMoreStatus, setLoadMoreStatus] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const getUser = async (page) => {
+    try {
+      const request = await axios.get(`/users?page=${page}&count=6`);
+      setUsers((state) => [...state, ...request.data.users]);
+
+      request.data.links.next_url !== null && setLoadMoreStatus(true);
+
+      setPage((state) => state + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser(page);
+  }, []);
+
+  const showMoreHandler = () => {
+    setLoadMoreStatus(false);
+    getUser(page);
+  };
+
   return (
     <section id="users" className="users">
       <div className="users__wrapper">
@@ -14,84 +43,31 @@ const Users = () => {
         </p>
 
         <ul className="users__list">
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">Maximillian</h3>
-            <p className="users__list_item_position">
-              Leading specialist of the Control Department
-            </p>
-            <p className="users__list_item_email">controldepartment@gmail</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">
-              Adolph Blaine Charles Davi Earl Matthew Matthe
-            </h3>
-            <p className="users__list_item_position">
-              Contextual advertising specialist
-            </p>
-            <p className="users__list_item_email">adolph.blainecharles@...</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">Elizabeth</h3>
-            <p className="users__list_item_position">Frontend developer</p>
-            <p className="users__list_item_email">elisabet.front@gmail.com</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
-
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">Maximillian</h3>
-            <p className="users__list_item_position">
-              Leading specialist of the Control Department
-            </p>
-            <p className="users__list_item_email">controldepartment@gmail</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">Elizabeth</h3>
-            <p className="users__list_item_position">Frontend developer</p>
-            <p className="users__list_item_email">elisabet.front@gmail.com</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
-          <li className="users__list_item">
-            <img
-              className="users__list_item_avatar"
-              src={avatar}
-              alt="avatar"
-            />
-            <h3 className="users__list_item_name">Elizabeth</h3>
-            <p className="users__list_item_position">Frontend developer</p>
-            <p className="users__list_item_email">elisabet.front@gmail.com</p>
-            <p className="users__list_item_phone">+380 50 678 03 24</p>
-          </li>
+          {users.length > 0 &&
+            users.map((user) => (
+              <li key={user.id} className="users__list_item">
+                <img
+                  className="users__list_item_avatar"
+                  src={user.photo}
+                  alt="avatar"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = avatar;
+                  }}
+                />
+                <h3 className="users__list_item_name">{user.name}</h3>
+                <p className="users__list_item_position">{user.position}</p>
+                <p className="users__list_item_email">{user.email}</p>
+                <p className="users__list_item_phone">{user.phone}</p>
+              </li>
+            ))}
         </ul>
 
-        <button className="users__btn">Show more</button>
+        {loadMoreStatus && (
+          <button onClick={showMoreHandler} className="users__btn">
+            Show more
+          </button>
+        )}
       </div>
     </section>
   );

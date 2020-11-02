@@ -21,12 +21,12 @@ const Header = () => {
               </a>
             </li>
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#none">
+              <a className="header__nav_list_item_link" href="#relationships">
                 Relationships
               </a>
             </li>
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#none">
+              <a className="header__nav_list_item_link" href="#requirement">
                 Requirement
               </a>
             </li>
