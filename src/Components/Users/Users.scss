@@ -59,6 +59,7 @@
         font-size: 24px;
         line-height: 29px;
         margin-bottom: 10px;
+        word-wrap: break-word;
       }
 
       &_position {
@@ -70,14 +71,54 @@
         margin-bottom: 3px;
       }
 
+      &_email_link {
+        position: relative;
+      }
+
       &_email {
+        padding-left: 10px;
+        height: 20px;
+        color: var(--grey-font);
         font-family: var(--main-font);
         font-weight: 400;
         font-size: 16px;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        transition: opacity 0.2s linear;
+
+        &:hover+.users__list_item_email_tooltip {
+          visibility: visible;
+          opacity: 1;
+        }
+
+        &_tooltip {
+          visibility: hidden;
+          padding: 6px 10px;
+          position: absolute;
+          top: 18px;
+          left: -50px;
+          opacity: 0;
+          color: #fefefe;
+          font-family: var(--main-font);
+          font-weight: 400;
+          font-size: 14px;
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.8);
+          transition: opacity 0.2s linear;
+
+          &:hover {
+            visibility: visible;
+            opacity: 1;
+          }
+
+          &:nth-child(3n) {}
+        }
       }
 
       &_phone {
+        color: var(--grey-font);
         font-family: var(--main-font);
         font-weight: 400;
         font-size: 16px;

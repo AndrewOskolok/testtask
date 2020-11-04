@@ -1,36 +1,25 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserOperation } from "../../redux/operations/usersOperation";
+import { getButton, getPage, getUsers } from "../../redux/selectors/selectors";
+import { setButton } from "../../redux/actions/buttonAction";
 import avatar from "../../images/icons/photo-cover.svg";
 import "./Users.scss";
 
-axios.defaults.baseURL =
-  "https://frontend-test-assignment-api.abz.agency/api/v1";
-
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [loadMoreStatus, setLoadMoreStatus] = useState(true);
-  const [page, setPage] = useState(1);
+  const users = useSelector((state) => getUsers(state));
+  const button = useSelector((state) => getButton(state));
+  const page = useSelector((state) => getPage(state));
 
-  const getUser = async (page) => {
-    try {
-      const request = await axios.get(`/users?page=${page}&count=6`);
-      setUsers((state) => [...state, ...request.data.users]);
-
-      request.data.links.next_url !== null && setLoadMoreStatus(true);
-
-      setPage((state) => state + 1);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUser(page);
+    dispatch(getUserOperation(page));
   }, []);
 
   const showMoreHandler = () => {
-    setLoadMoreStatus(false);
-    getUser(page);
+    dispatch(setButton(false));
+    dispatch(getUserOperation(page));
   };
 
   return (
@@ -57,13 +46,26 @@ const Users = () => {
                 />
                 <h3 className="users__list_item_name">{user.name}</h3>
                 <p className="users__list_item_position">{user.position}</p>
-                <p className="users__list_item_email">{user.email}</p>
-                <p className="users__list_item_phone">{user.phone}</p>
+                <a
+                  href={`email: ${user.email}`}
+                  className="users__list_item_email_link"
+                >
+                  <p className="users__list_item_email">{user.email}</p>
+                  <span className="users__list_item_email_tooltip">
+                    {user.email}
+                  </span>
+                </a>
+                <a
+                  href={`tel: ${user.phone}`}
+                  className="users__list_item_phone"
+                >
+                  {user.phone}
+                </a>
               </li>
             ))}
         </ul>
 
-        {loadMoreStatus && (
+        {button && (
           <button onClick={showMoreHandler} className="users__btn">
             Show more
           </button>

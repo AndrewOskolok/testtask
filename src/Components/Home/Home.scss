@@ -58,7 +58,12 @@
       background-color: #d24335;
     }
   }
+}
 
+@media (max-width: 767px) {
+  .home__desc_hiding {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) {
