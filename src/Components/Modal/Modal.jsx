@@ -8,6 +8,7 @@ import { setPage } from "../../redux/actions/pageAction";
 import { getUserOperation } from "../../redux/operations/usersOperation";
 import "./transition/Modal.scss";
 import "./Modal.scss";
+import Ovarlay from "../Ovarlay/Ovarlay";
 
 const Modal = () => {
   const modal = useSelector((state) => getModal(state));
@@ -16,6 +17,7 @@ const Modal = () => {
 
   const closeModal = ({ target }) => {
     if (target.id === "overlay" || target.id === "closure") {
+      document.body.style.overflowY = "scroll";
       dispatch(setModal(false));
       dispatch(setUsers([]));
       dispatch(setPage(1));
@@ -23,13 +25,14 @@ const Modal = () => {
     }
   };
 
-  const scrollSwitcher = (type) => {
-    document.body.style.overflowY = type;
-  };
-
   return (
     <>
-      <CSSTransition in={modal} timeout={200} classNames="modal" unmountOnExit>
+      <CSSTransition
+        in={modal === "modal"}
+        timeout={200}
+        classNames="modal"
+        unmountOnExit
+      >
         <>
           <div className="modal">
             <p className="modal__title">Congratulations</p>
@@ -56,7 +59,7 @@ const Modal = () => {
         </>
       </CSSTransition>
 
-      {modal ? scrollSwitcher("hidden") : scrollSwitcher("scroll")}
+      {modal === "modal" && <Ovarlay modal={modal} />}
     </>
   );
 };

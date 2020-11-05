@@ -1,7 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setModal } from "../../redux/actions/modalAction";
 import "./Header.scss";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const modalMenuHandler = () => {
+    dispatch(setModal("modalmenu"));
+  };
+
   return (
     <header className="header">
       <div className="header__wrapper">
@@ -12,7 +20,7 @@ const Header = () => {
         </div>
 
         <nav className="header__nav">
-          <div className="header__nav_burger"></div>
+          <div onClick={modalMenuHandler} className="header__nav_burger"></div>
 
           <ul className="header__nav_list">
             <li className="header__nav_list_item">

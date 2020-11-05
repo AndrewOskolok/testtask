@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOperation } from "../../redux/operations/usersOperation";
 import { getButton, getPage, getUsers } from "../../redux/selectors/selectors";

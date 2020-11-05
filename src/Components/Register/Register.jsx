@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Modal from "../Modal/Modal";
 import { getToken } from "../../redux/selectors/selectors";
-import "./Register.scss";
 import { setModal } from "../../redux/actions/modalAction";
+import "./Register.scss";
 
 axios.defaults.baseURL =
   "https://frontend-test-assignment-api.abz.agency/api/v1";
@@ -68,7 +68,7 @@ const Register = () => {
         },
       });
 
-      result.status && dispatch(setModal(true));
+      result.status && dispatch(setModal("modal"));
     } catch (error) {
       console.log(error);
     }
