@@ -24,22 +24,22 @@ const Header = () => {
 
           <ul className="header__nav_list">
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#about">
+              <a className="header__nav_list_item_link" href="#register">
                 About me
               </a>
             </li>
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#relationships">
+              <a className="header__nav_list_item_link" href="#register">
                 Relationships
               </a>
             </li>
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#requirement">
+              <a className="header__nav_list_item_link" href="#register">
                 Requirement
               </a>
             </li>
             <li className="header__nav_list_item">
-              <a className="header__nav_list_item_link" href="#users">
+              <a className="header__nav_list_item_link" href="#register">
                 Users
               </a>
             </li>

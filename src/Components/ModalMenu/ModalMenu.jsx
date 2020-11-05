@@ -26,17 +26,17 @@ const ModalMenu = () => {
 
           <ul className="modalMenu__list">
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#about">
+              <a className="modalMenu__list_item_link" href="#register">
                 About me
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Relationships
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#users">
+              <a className="modalMenu__list_item_link" href="#register">
                 Users
               </a>
             </li>
@@ -46,61 +46,61 @@ const ModalMenu = () => {
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Terms and Conditions
               </a>
             </li>
           </ul>
           <ul className="modalMenu__list">
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 How it works
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Partnershop
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Help
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Leave testimonial
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Contact us
               </a>
             </li>
           </ul>
           <ul className="modalMenu__list">
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Articles
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Our news
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Testimonials
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Licenses
               </a>
             </li>
             <li className="modalMenu__list_item">
-              <a className="modalMenu__list_item_link" href="#none">
+              <a className="modalMenu__list_item_link" href="#register">
                 Privacy Policy
               </a>
             </li>
