@@ -4,13 +4,12 @@ import axios from "axios";
 import Modal from "../Modal/Modal";
 import { getTokenOperation } from "../../redux/operations/tokenOperation";
 import { getToken } from "../../redux/selectors/selectors";
-import { setModal } from "../../redux/actions/modalAction";
 import "./Register.scss";
 
 axios.defaults.baseURL =
   "https://frontend-test-assignment-api.abz.agency/api/v1";
 
-const initialState = {
+const initialForm = {
   name: "",
   email: "",
   phone: "",
@@ -18,9 +17,22 @@ const initialState = {
   image: "empty",
 };
 
+const initialErrMes = {
+  name: "",
+  email: "",
+  phone: "",
+  position: "",
+  image: "",
+  status: false,
+};
+
+const emailPattern = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+const phonePattern = /^[+]{0,1}380([0-9]{9})$/;
+
 const Register = () => {
-  const [inputForm, setInputForm] = useState(initialState);
+  const [inputForm, setInputForm] = useState(initialForm);
   const [positions, setPositions] = useState(null);
+  const [errMes, setErrMes] = useState(initialErrMes);
 
   const token = useSelector((state) => getToken(state));
 
@@ -38,7 +50,103 @@ const Register = () => {
   useEffect(() => {
     getPositions();
     dispatch(getTokenOperation());
-  }, []);
+  }, [dispatch]);
+
+  // NAME VERIFICATION REAL-TIME
+  useEffect(() => {
+    if (inputForm.name.length === 1 || inputForm.name.length > 60) {
+      setErrMes((state) => ({
+        ...state,
+        name: "Name length from 2 to 60 characters",
+      }));
+    } else {
+      setErrMes((state) => ({
+        ...state,
+        name: "",
+      }));
+    }
+  }, [inputForm.name]);
+
+  // EMAIL VERIFICATION REAL-TIME
+  useEffect(() => {
+    if (inputForm.email.length === 1 || inputForm.email.length > 100) {
+      setErrMes((state) => ({
+        ...state,
+        email: "Email length from 2 to 100 characters",
+      }));
+    } else if (inputForm.email.length && !emailPattern.test(inputForm.email)) {
+      setErrMes((state) => ({
+        ...state,
+        email: "Not valid email",
+      }));
+    } else {
+      setErrMes((state) => ({
+        ...state,
+        email: "",
+      }));
+    }
+  }, [inputForm.email]);
+
+  // PHONE VERIFICATION REAL-TIME
+  useEffect(() => {
+    if (inputForm.phone.length && !phonePattern.test(inputForm.phone)) {
+      setErrMes((state) => ({
+        ...state,
+        phone: "Phone should start with code of Ukraine +380",
+      }));
+    } else {
+      setErrMes((state) => ({
+        ...state,
+        phone: "",
+      }));
+    }
+  }, [inputForm.phone]);
+
+  // POSITION VERIFICATION REAL-TIME
+  useEffect(() => {
+    if (inputForm.position.length) {
+      setErrMes((state) => ({
+        ...state,
+        position: "",
+      }));
+    }
+  }, [inputForm.position]);
+
+  // IMAGE VERIFICATION REAL-TIME
+  useEffect(() => {
+    if (inputForm.image && inputForm.image.size > 5 * 1024 * 1024) {
+      setErrMes((state) => ({
+        ...state,
+        image: "Image size should not exceed 5 mb",
+      }));
+    } else if (inputForm.image === undefined) {
+      setErrMes((state) => ({
+        ...state,
+        image: "The image field must not be empty",
+      }));
+    } else {
+      setErrMes((state) => ({
+        ...state,
+        image: "",
+      }));
+    }
+  }, [inputForm.image]);
+
+  useEffect(() => {
+    !errMes.name &&
+    !errMes.email &&
+    !errMes.phone &&
+    !errMes.position &&
+    !errMes.image
+      ? setErrMes((state) => ({
+          ...state,
+          status: true,
+        }))
+      : setErrMes((state) => ({
+          ...state,
+          status: false,
+        }));
+  }, [errMes.name, errMes.email, errMes.phone, errMes.position, errMes.image]);
 
   const inputHandler = ({ target }) => {
     const { name, value } = target;
@@ -52,28 +160,61 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData();
-      formData.append("position_id", inputForm.position);
-      formData.append("name", inputForm.name);
-      formData.append("email", inputForm.email);
-      formData.append("phone", inputForm.phone);
-      formData.append("photo", inputForm.image);
-
-      const result = await axios({
-        method: "post",
-        data: formData,
-        url: "/users",
-        headers: {
-          Token: token,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      result.status && dispatch(setModal("modal"));
-    } catch (error) {
-      console.log(error);
+    // NAME VERIFICATION ON SUBMIT
+    if (inputForm.name.length === 0) {
+      setErrMes((state) => ({
+        ...state,
+        name: "The name field must not be empty",
+      }));
     }
+
+    // EMAIL VERIFICATION ON SUBMIT
+    if (inputForm.email.length === 0) {
+      setErrMes((state) => ({
+        ...state,
+        email: "The email field must not be empty",
+      }));
+    }
+
+    // PHONE VERIFICATION ON SUBMIT
+    if (inputForm.phone.length === 0) {
+      setErrMes((state) => ({
+        ...state,
+        phone: "The phone field must not be empty",
+      }));
+    }
+
+    // POSITION VERIFICATION ON SUBMIT
+    if (inputForm.position.length === 0) {
+      setErrMes((state) => ({
+        ...state,
+        position: "The position field must not be empty",
+      }));
+    }
+
+    // IMAGE VERIFICATION ON SUBMIT
+    if (inputForm.image === "empty") {
+      setErrMes((state) => ({
+        ...state,
+        image: "The image field must not be empty",
+      }));
+    }
+
+    inputForm.name &&
+      inputForm.email &&
+      inputForm.phone &&
+      inputForm.position &&
+      inputForm.image &&
+      errMes.status &&
+      isValidate();
+  };
+
+  const isValidate = () => {
+    setInputForm(initialForm);
+    setErrMes(initialErrMes);
+
+    console.log("submit");
+    // dispatch(postUserOperation(inputForm, token));
   };
 
   return (
@@ -90,40 +231,41 @@ const Register = () => {
           <label className="register__form_label">Name</label>
           <input
             onChange={inputHandler}
-            className="register__form_input"
+            className={`register__form_input ${
+              errMes.name && `register__form_input_error`
+            }`}
             name="name"
             type="text"
             value={inputForm.name}
             placeholder="Your name"
-            minLength="2"
-            maxLength="60"
-            required
           />
+          <p className="register__form_input_error_message">{errMes.name}</p>
 
           <label className="register__form_label">Email</label>
           <input
             onChange={inputHandler}
-            className="register__form_input"
+            className={`register__form_input ${
+              errMes.email && `register__form_input_error`
+            }`}
             name="email"
-            type="email"
+            type="text"
             value={inputForm.email}
             placeholder="Your email"
-            minLength="2"
-            maxLength="100"
-            required
           />
+          <p className="register__form_input_error_message">{errMes.email}</p>
 
           <label className="register__form_label">Phone number</label>
           <input
             onChange={inputHandler}
-            className="register__form_input"
+            className={`register__form_input ${
+              errMes.phone && `register__form_input_error`
+            }`}
             name="phone"
             type="tel"
             value={inputForm.phone}
-            pattern="[+]{1}[380]{3}[0-9]{9}"
             placeholder="+380XXXXXXXXX"
-            required
           />
+          <p className="register__form_input_error_message">{errMes.phone}</p>
 
           <p className="register__form_list_title">Select your position</p>
 
@@ -153,6 +295,9 @@ const Register = () => {
                 </li>
               ))}
           </ul>
+          <p className="register__form_input_error_message">
+            {errMes.position}
+          </p>
 
           <label className="register__form_label" htmlFor="true">
             Photo
@@ -161,16 +306,20 @@ const Register = () => {
           <div
             className={`register__form_file ${
               inputForm.image !== "empty" && `register__form_file_chosen`
-            } ${
-              inputForm.image === undefined && `register__form_file_no_chosen`
-            }`}
+            }  ${errMes.image && `register__form_file_no_chosen`}`}
           >
             <p className="register__form_file_text">
               {inputForm.image === "empty" && `Upload your file`}
               {inputForm.image && inputForm.image.name}
               {inputForm.image === undefined && `No file chosen`}
             </p>
-            <label className="register__form_file_label" htmlFor="file">
+            <label
+              className={`register__form_file_label ${
+                inputForm.image !== "empty" &&
+                `register__form_file_label_chosen`
+              } ${errMes.image && `register__form_file_label_no_chosen`}`}
+              htmlFor="file"
+            >
               Browse
             </label>
 
@@ -183,8 +332,14 @@ const Register = () => {
               hidden
             />
           </div>
+          <p className="register__form_input_error_message">{errMes.image}</p>
 
-          <button className="register__form_submit_btn" type="submit">
+          <button
+            className={`register__form_submit_btn ${
+              !errMes.status && `register__form_submit_btn_disabled`
+            }`}
+            type="submit"
+          >
             Sing up now
           </button>
         </form>

@@ -7,7 +7,6 @@ axios.defaults.baseURL =
 export const getTokenOperation = () => async (dispatch) => {
   try {
     const request = await axios.get(`/token`);
-    console.log(request);
     dispatch(setToken(request.data.token));
   } catch (error) {
     console.log(error);

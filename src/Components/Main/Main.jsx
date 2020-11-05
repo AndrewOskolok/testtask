@@ -1,5 +1,5 @@
 import React from "react";
-import TrackVisibility from "react-on-screen";
+// import TrackVisibility from "react-on-screen";
 
 import Home from "../Home/Home";
 import AboutMe from "../AboutMe/AboutMe";
@@ -13,13 +13,15 @@ const Main = () => {
       <Home />
       <AboutMe />
 
-      <TrackVisibility once offset={200}>
+      <Users />
+      <Register />
+      {/* <TrackVisibility once partialVisibility offset={500}>
         {({ isVisible }) => isVisible && <Users />}
       </TrackVisibility>
 
-      <TrackVisibility once offset={200}>
+      <TrackVisibility once partialVisibility offset={500}>
         {({ isVisible }) => isVisible && <Register />}
-      </TrackVisibility>
+      </TrackVisibility> */}
     </main>
   );
 };
