@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Modal from "../Modal/Modal";
+import { getTokenOperation } from "../../redux/operations/tokenOperation";
 import { getToken } from "../../redux/selectors/selectors";
 import { setModal } from "../../redux/actions/modalAction";
 import "./Register.scss";
@@ -16,7 +17,7 @@ const initialState = {
   position: "",
   image: "empty",
 };
-console.log("load");
+
 const Register = () => {
   const [inputForm, setInputForm] = useState(initialState);
   const [positions, setPositions] = useState(null);
@@ -36,6 +37,7 @@ const Register = () => {
 
   useEffect(() => {
     getPositions();
+    dispatch(getTokenOperation());
   }, []);
 
   const inputHandler = ({ target }) => {
