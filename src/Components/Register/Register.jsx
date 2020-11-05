@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Modal from "../Modal/Modal";
+import { postUserOperation } from "../../redux/operations/usersOperation";
 import { getTokenOperation } from "../../redux/operations/tokenOperation";
 import { getToken } from "../../redux/selectors/selectors";
 import "./Register.scss";
@@ -213,8 +214,7 @@ const Register = () => {
     setInputForm(initialForm);
     setErrMes(initialErrMes);
 
-    console.log("submit");
-    // dispatch(postUserOperation(inputForm, token));
+    dispatch(postUserOperation(inputForm, token));
   };
 
   return (
@@ -305,7 +305,9 @@ const Register = () => {
 
           <div
             className={`register__form_file ${
-              inputForm.image !== "empty" && `register__form_file_chosen`
+              inputForm.image !== "empty" &&
+              inputForm.image &&
+              `register__form_file_chosen`
             }  ${errMes.image && `register__form_file_no_chosen`}`}
           >
             <p className="register__form_file_text">

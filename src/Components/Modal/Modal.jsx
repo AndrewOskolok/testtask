@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { setModal } from "../../redux/actions/modalAction";
@@ -22,6 +22,9 @@ const Modal = () => {
       dispatch(setUsers([]));
       dispatch(setPage(1));
       dispatch(getUserOperation(1));
+
+      const usersBlock = document.getElementById("users");
+      usersBlock.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   };
 
@@ -59,7 +62,7 @@ const Modal = () => {
         </>
       </CSSTransition>
 
-      {modal === "modal" && <Ovarlay modal={modal} />}
+      {modal === "modal" && <Ovarlay modal={modal} close={closeModal} />}
     </>
   );
 };

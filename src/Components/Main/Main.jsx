@@ -15,13 +15,6 @@ const Main = () => {
 
       <Users />
       <Register />
-      {/* <TrackVisibility once partialVisibility offset={500}>
-        {({ isVisible }) => isVisible && <Users />}
-      </TrackVisibility>
-
-      <TrackVisibility once partialVisibility offset={500}>
-        {({ isVisible }) => isVisible && <Register />}
-      </TrackVisibility> */}
     </main>
   );
 };
