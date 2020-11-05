@@ -39,6 +39,8 @@ const Users = () => {
                   className="users__list_item_avatar"
                   src={user.photo}
                   alt="avatar"
+                  width="70"
+                  height="70"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = avatar;

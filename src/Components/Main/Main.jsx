@@ -1,25 +1,25 @@
-import React, { Suspense } from "react";
+import React from "react";
+import TrackVisibility from "react-on-screen";
 
-const Home = React.lazy(() => import("../Home/Home"));
-const AboutMe = React.lazy(() => import("../AboutMe/AboutMe"));
-const Users = React.lazy(() => import("../Users/Users"));
-const Register = React.lazy(() => import("../Register/Register"));
-
-// import Home from "../Home/Home";
-// import AboutMe from "../AboutMe/AboutMe";
-// import Users from "../Users/Users";
-// import Register from "../Register/Register";
-// import "./Main.scss";
+import Home from "../Home/Home";
+import AboutMe from "../AboutMe/AboutMe";
+import Users from "../Users/Users";
+import Register from "../Register/Register";
+import "./Main.scss";
 
 const Main = () => {
   return (
     <main>
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <Home />
-        <AboutMe />
-        <Users />
-        <Register />
-      </Suspense>
+      <Home />
+      <AboutMe />
+
+      <TrackVisibility once offset={200}>
+        {({ isVisible }) => isVisible && <Users />}
+      </TrackVisibility>
+
+      <TrackVisibility once offset={200}>
+        {({ isVisible }) => isVisible && <Register />}
+      </TrackVisibility>
     </main>
   );
 };

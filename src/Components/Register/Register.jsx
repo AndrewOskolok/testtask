@@ -16,7 +16,7 @@ const initialState = {
   position: "",
   image: "empty",
 };
-
+console.log("load");
 const Register = () => {
   const [inputForm, setInputForm] = useState(initialState);
   const [positions, setPositions] = useState(null);
