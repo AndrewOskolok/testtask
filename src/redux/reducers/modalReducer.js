@@ -1,8 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setModal } from "../actions/modalAction";
 
-const initialState = false;
+const initialState = { status: false, errMess: "" };
 
 export default createReducer(initialState, {
-  [setModal]: (_, { payload }) => payload,
+  [setModal]: (state, { payload }) => ({ ...state, ...payload }),
 });

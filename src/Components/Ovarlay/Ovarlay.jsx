@@ -10,7 +10,7 @@ const Ovarlay = (modal) => {
 
   const closeHandler = () => {
     document.body.style.overflowY = "scroll";
-    dispatch(setModal(false));
+    dispatch(setModal({ status: false, errMess: "" }));
   };
 
   const scrollDeactivator = () => {

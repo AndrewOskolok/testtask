@@ -18,20 +18,21 @@ const Modal = () => {
   const closeModal = ({ target }) => {
     if (target.id === "overlay" || target.id === "closure") {
       document.body.style.overflowY = "scroll";
-      dispatch(setModal(false));
+      dispatch(setModal({ status: false, errMess: "" }));
       dispatch(setUsers([]));
       dispatch(setPage(1));
       dispatch(getUserOperation(1));
 
       const usersBlock = document.getElementById("users");
-      usersBlock.scrollIntoView({ block: "start", behavior: "smooth" });
+      !modal.errMess &&
+        usersBlock.scrollIntoView({ block: "start", behavior: "smooth" });
     }
   };
 
   return (
     <>
       <CSSTransition
-        in={modal === "modal"}
+        in={modal.status === "modal"}
         timeout={200}
         classNames="modal"
         unmountOnExit
@@ -46,9 +47,13 @@ const Modal = () => {
               className="modal__close_btn"
             ></button>
 
-            <p className="modal__message">
-              You have successfully passed the registration
-            </p>
+            {modal.errMess ? (
+              <p className="modal__message">{modal.errMess}</p>
+            ) : (
+              <p className="modal__message">
+                You have successfully passed the registration
+              </p>
+            )}
 
             <button
               onClick={closeModal}
@@ -62,7 +67,9 @@ const Modal = () => {
         </>
       </CSSTransition>
 
-      {modal === "modal" && <Ovarlay modal={modal} close={closeModal} />}
+      {modal.status === "modal" && (
+        <Ovarlay modal={modal.status} close={closeModal} />
+      )}
     </>
   );
 };

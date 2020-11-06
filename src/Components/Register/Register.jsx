@@ -115,22 +115,40 @@ const Register = () => {
 
   // IMAGE VERIFICATION REAL-TIME
   useEffect(() => {
-    if (inputForm.image && inputForm.image.size > 5 * 1024 * 1024) {
-      setErrMes((state) => ({
-        ...state,
-        image: "Image size should not exceed 5 mb",
-      }));
-    } else if (inputForm.image === undefined) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      const image = new Image();
+      image.src = reader.result;
+      image.onload = function () {
+        if (inputForm.image && inputForm.image.size > 5 * 1024 * 1024) {
+          setErrMes((state) => ({
+            ...state,
+            image: "Image size should not exceed 5 mb",
+          }));
+        } else if (image.width < 70 && image.height < 70) {
+          setErrMes((state) => ({
+            ...state,
+            image: "The image must be no less than 70x70",
+          }));
+        } else {
+          setErrMes((state) => ({
+            ...state,
+            image: "",
+          }));
+        }
+      };
+    };
+
+    if (inputForm.image === undefined) {
       setErrMes((state) => ({
         ...state,
         image: "The image field must not be empty",
       }));
-    } else {
-      setErrMes((state) => ({
-        ...state,
-        image: "",
-      }));
     }
+
+    inputForm.image &&
+      inputForm.image !== "empty" &&
+      reader.readAsDataURL(inputForm.image);
   }, [inputForm.image]);
 
   useEffect(() => {
@@ -317,6 +335,7 @@ const Register = () => {
             </p>
             <label
               className={`register__form_file_label ${
+                inputForm.image &&
                 inputForm.image !== "empty" &&
                 `register__form_file_label_chosen`
               } ${errMes.image && `register__form_file_label_no_chosen`}`}

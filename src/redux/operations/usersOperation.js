@@ -39,8 +39,10 @@ export const postUserOperation = (data, token) => async (dispatch) => {
       },
     });
 
-    result.status && dispatch(setModal("modal"));
+    result.status && dispatch(setModal({ status: "modal" }));
   } catch (error) {
-    console.log(error);
+    dispatch(
+      setModal({ status: "modal", errMess: error.response.data.message })
+    );
   }
 };
